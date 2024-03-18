@@ -1,0 +1,45 @@
+<div class="main-content">
+    <div class="d-flex topContainer">
+        <div class="d-flex flex-column mx-auto bannerOverlay">
+            <div class="d-flex flex-column my-5 mx-auto">
+                <h2 class="" style="color: white;">Our Blogs</h2>
+                <p>Read our blogs to know about the new updates from <br> ZAHA homes </p>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="blogs && blogs.length > 0; else loading">
+        <div class="container mt-2 mb-5 mx-auto">
+            <div class="row d-flex cardContainer">
+                <ng-container *ngFor="let blog of blogs; let i = index">
+                    <div class="card blogCard px-0" [routerLink]="['/blog/',blog?.title.replaceAll(' ','-')]">
+                        <div class="d-flex flex-column h-100">
+                            <div class="d-flex">
+                                <img class="card-img-top blogImg" src="{{blog?.coverImageFile.coverImageUrl}}" alt=""
+                                    onerror="this.onerror = null; this.src='/assets/images/fallback.jpg'">
+                            </div>
+                            <div class="card-body h-50" style="padding-top: 0px;">
+                                <div class="card-content d-flex h-100 flex-column">
+                                    <p class="card-text mt-3"><small class="text-muted"><span
+                                                style="color: orange; font-size: 18px; font-weight: 600;">{{blog.readTime}}
+                                                min read</span></small></p>
+                                    <h5 class="card-title mt-2">{{blog?.title}}</h5>
+                                    <p class="card-text mt-3 blogDescription" [innerHTML]="blog?.description"></p>
+                                    <span class="blogTag flex-end mt-auto ms-auto">Read more...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <!-- <pagination-controls class="d-flex justify-content-center ngxPaginator" (pageChange)="p = $event"
+                    (click)="pageChangeScrollTop(p)"></pagination-controls> -->
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #loading>
+        <div class="container">
+            <div class="w-100 d-flex" style="height: calc(100vh - 80px);">
+                <img class="opacity-25 my-auto mx-auto zahaLoader" src="/assets/images/zahaLoading.gif" alt="">
+            </div>
+        </div>
+    </ng-template>
+</div>
