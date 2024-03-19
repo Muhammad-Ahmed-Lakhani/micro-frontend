@@ -1,0 +1,110 @@
+<div class="container-fluid">
+    <ng-container *ngIf="!loadingData; else loading">
+        <div class="container mx-auto blog_wrapper">
+            <div class="d-flex flex-column blog">
+                <!-- <div class="d-flex mt-4 mx-auto">
+                    <span class="topTag text-capitalize">{{blog?.tags?.length > 0 ? blog?.tags[0] :
+                        'Primary'}}</span>
+                </div> -->
+                <h1 class="mt-4 mb-0 blogTitle" style="color: #4E4947">{{blog?.title}}</h1>
+                <p class="mt-4 mb-0 blogSpanTopTags" style="color: #212529">
+                    <span style="padding-right: 15px;"> {{blog?.author || 'ZAHA-HOMES'}}</span> |
+                    <span style="padding: 0px 15px 0px;">{{lastUpdated}}</span> |
+                    <span style="padding-left: 15px;color: #F4612D;">{{readTime}} min read</span>
+                </p>
+                <div class="text-center mt-3" *ngIf="blog?.coverImageFile?.coverImageUrl">
+                    <img class="blogCoverImg" src="{{blog?.coverImageFile?.coverImageUrl}}"
+                        alt="{{blog?.coverImageFile?.altText}}">
+                </div>
+                <div class="container blogDescription" *ngIf="blog?.description" [innerHTML]="blog.description">
+                </div>
+            </div>
+            <ng-container *ngFor="let section of blog?.sections">
+                <div class="section mt-2">
+                    <!-- [innerHtml]="'<' + headerSize + '>section.description</' + headerSize + '>'" -->
+                    <div class="sectionHeader" class="sectionTitle" *ngIf="section.header">
+                        <ng-container *ngIf="section.headerSize == 'h1'">
+                            <h1 class="sectionTitle">{{section.header}}</h1>
+                        </ng-container>
+                        <ng-container *ngIf="section.headerSize == 'h2'">
+                            <h2 class="sectionTitle">{{section.header}}</h2>
+                        </ng-container>
+                        <ng-container *ngIf="section.headerSize == 'h3'">
+                            <h3 class="sectionTitle">{{section.header}}</h3>
+                        </ng-container>
+                        <ng-container *ngIf="section.headerSize == 'h4'">
+                            <h4 class="sectionTitle">{{section.header}}</h4>
+                        </ng-container>
+                        <ng-container *ngIf="section.headerSize == 'h5'">
+                            <h5 class="sectionTitle">{{section.header}}</h5>
+                        </ng-container>
+                        <ng-container *ngIf="section.headerSize == 'h6'">
+                            <h6 class="sectionTitle">{{section.header}}</h6>
+                        </ng-container>
+                    </div>
+                    <div class="mt-2" *ngIf="section.coverImageFile?.coverImageUrl">
+                        <img class="sectionCoverImg" src="{{section.coverImageFile.coverImageUrl}}"
+                            alt="{{section.coverImageFile?.altText}}">
+                    </div>
+                    <div *ngIf="section.description" class="container sectionDescription"
+                        [innerHTML]="section.description">
+                    </div>
+                    <div class="mb-4 mt-4 iframeDiv" *ngIf="section.validUrl" style="text-align: center;">
+                        <ng-container>
+                            <iframe class="iframe" [src]="section.url | safe" title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <ng-container *ngIf="!viewPagination">
+            <ng-container *ngIf="blogs">
+                <div class="d-flex">
+                    <hr class="mx-auto w-50">
+                </div>
+                <div class="container pt-2 d-flex justify-content-center">
+                    <div class="row w-100 navDiv">
+                        <div class="col-12 col-md-6 d-flex flex-column p-0 justify-content-center previousNavDiv"
+                            [ngStyle]="{'background-image': 'url('+prevBlogImage+')'}" (click)="prev()"
+                            [ngClass]="{'w-50': !nextBlog, 'mr-auto': !nextBlog}" *ngIf="prevBlog">
+                            <div class="prevOverlayDiv">
+                                <div class="d-flex flex-column navTextWrap ">
+                                    <div class="d-flex ms-auto navTextArrowDiv">
+                                        <img class="mb-3 navArrow"
+                                            src="../../../../../assets/images/previousNavArrow.svg" alt="">
+                                        <p class="navText">Previous</p>
+                                    </div>
+                                    <p class="imgText w-75 mx-auto h-100">{{prevBlog?.title}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div [ngStyle]="{'background-image': 'url('+nextBlogImage+')'}"
+                            class="col-12 col-md-6 d-flex flex-column p-0 justify-content-center nextNavDiv"
+                            (click)="next()" [ngClass]="{'w-50': !prevBlog, 'ml-auto': !prevBlog}" *ngIf="nextBlog">
+                            <div class="nextOverlayDiv">
+                                <div class=" d-flex flex-column navTextWrap"
+                                    [ngClass]="{'padding-top.px': !prevBlog ? 60 : null}">
+                                    <div class="d-flex ms-auto navTextArrowDiv">
+                                        <img class="mb-3 navArrow" src="../../../../../assets/images/nextNavArrow.svg"
+                                            alt="">
+                                        <p class="navText">Next</p>
+                                    </div>
+                                    <p class="imgText w-75 mx-auto h-100">{{nextBlog?.title}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+    <ng-template #loading>
+        <div class="container">
+            <div class="w-100 d-flex" style="height: calc(100vh - 80px);">
+                <img class="opacity-25 my-auto mx-auto zahaLoader" src="./assets/images/zahaLoading.gif" alt="">
+            </div>
+        </div>
+    </ng-template>
+</div>

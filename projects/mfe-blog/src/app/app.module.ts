@@ -7,6 +7,7 @@ import { BlogModule } from './blog/blog.module';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../../../../src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -15,10 +16,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
   ],
   imports: [
     BrowserModule,
+    RouterModule,
     AppRoutingModule,
     BlogModule,
-    // AngularFireModule.initializeApp(environment.firebaseConfig),
-    // AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
